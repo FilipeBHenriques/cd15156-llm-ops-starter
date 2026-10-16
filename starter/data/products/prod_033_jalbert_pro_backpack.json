@@ -1,0 +1,16 @@
+{
+  "product_id": "prod_033_jalbert_pro_backpack",
+  "name": "JA Jalbert Pro Backpack",
+  "category": "accessories",
+  "brand": "JA Jalbert",
+  "price": 89.99,
+  "description": "A tournament-day backpack built for players who carry more than one paddle. Dedicated padded paddle sleeves sit alongside a ventilated shoe compartment and an insulated side pocket for drinks, so gear, shoes, and hydration never mix in transit.",
+  "specifications": {
+    "type": "backpack",
+    "paddle_capacity": 4,
+    "compartments": 6,
+    "material": "600D polyester",
+    "dimensions": "19 in x 12 in x 9 in"
+  },
+  "care_instructions": "Spot clean the exterior with a damp cloth and mild soap; do not machine wash. Air dry fully before storing paddles inside to avoid trapped moisture."
+}

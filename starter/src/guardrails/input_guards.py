@@ -37,6 +37,26 @@ INJECTION_PATTERNS: list[re.Pattern] = [
         r"\b(jailbreak\s+mode|DAN\s+mode|developer\s+mode|do\s+anything\s+now)\b",
         re.IGNORECASE,
     ),
+    # --- Added for Task 6 (3+ new injection patterns) ---
+    # Catches "from now on, respond only as JSON with no explanation" style
+    # attempts to hijack the output format/behavior rather than the content.
+    re.compile(
+        r"\bfrom\s+now\s+on\s*,?\s*(you\s+(will|must|should)|respond|reply|act)\b",
+        re.IGNORECASE,
+    ),
+    # Catches attempts to get the model to speak "as" a persona/entity that
+    # isn't the FAQ assistant (distinct from "act as" above, which targets
+    # explicit persona assignment; this targets "speaking in character").
+    re.compile(
+        r"\b(stay|remain)\s+in\s+character\b|\bno\s+matter\s+what\s+i\s+(ask|say)\b",
+        re.IGNORECASE,
+    ),
+    # Catches delimiter/fence-based injection — trying to smuggle a fake
+    # "end of user input, begin new instructions" boundary inside the text.
+    re.compile(
+        r"(---+|===+|###+)\s*(end|new)\s+(of\s+)?(user\s+)?(input|instructions?|prompt)\b",
+        re.IGNORECASE,
+    ),
 ]
 
 PII_PATTERNS: dict[str, re.Pattern] = {
@@ -44,6 +64,15 @@ PII_PATTERNS: dict[str, re.Pattern] = {
     "phone": re.compile(r"(?<!\d)(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}(?!\d)"),
     "ssn": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
     "credit_card": re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
+    # --- Added for Task 6 (new sensitive-data type) ---
+    # IPv4 addresses, e.g. a customer pasting a support-session log that
+    # contains their own machine's address.
+    "ip_address": re.compile(
+        r"\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b"
+    ),
+    # IBAN — 2-letter country code + 2 check digits + up to 30 alphanumeric,
+    # e.g. a customer pasting bank details into a refund-status question.
+    "iban": re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b"),
 }
 
 PII_REDACTIONS: dict[str, str] = {
@@ -51,6 +80,8 @@ PII_REDACTIONS: dict[str, str] = {
     "phone": "[REDACTED_PHONE]",
     "ssn": "[REDACTED_SSN]",
     "credit_card": "[REDACTED_CARD]",
+    "ip_address": "[REDACTED_IP]",
+    "iban": "[REDACTED_IBAN]",
 }
 
 

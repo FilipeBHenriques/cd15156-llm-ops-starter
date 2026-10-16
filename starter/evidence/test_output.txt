@@ -1,0 +1,64 @@
+uv run pytest tests/ -q
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+........................................................................ [ 93%]
+...............                                                          [100%]
+=============================== warnings summary ===============================
+src/evaluation/run_eval.py:26
+src/evaluation/run_eval.py:26
+  /workspace/code/starter/src/evaluation/run_eval.py:26: DeprecationWarning: Importing answer_relevancy from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import answer_relevancy
+    from ragas.metrics import (
+
+src/evaluation/run_eval.py:26
+src/evaluation/run_eval.py:26
+  /workspace/code/starter/src/evaluation/run_eval.py:26: DeprecationWarning: Importing context_precision from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_precision
+    from ragas.metrics import (
+
+src/evaluation/run_eval.py:26
+src/evaluation/run_eval.py:26
+  /workspace/code/starter/src/evaluation/run_eval.py:26: DeprecationWarning: Importing context_recall from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_recall
+    from ragas.metrics import (
+
+src/evaluation/run_eval.py:26
+src/evaluation/run_eval.py:26
+  /workspace/code/starter/src/evaluation/run_eval.py:26: DeprecationWarning: Importing faithfulness from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import faithfulness
+    from ragas.metrics import (
+
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_calls_ragas_with_default_metrics
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_threads_top_k_to_build_eval_dataset
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_accepts_custom_metrics
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_omits_run_config_when_max_workers_is_none
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_passes_max_workers_via_run_config
+  /workspace/code/starter/src/evaluation/run_eval.py:127: DeprecationWarning: LangchainLLMWrapper is deprecated and will be removed in a future version. Use llm_factory instead: from openai import OpenAI; from ragas.llms import llm_factory; llm = llm_factory('gpt-4o-mini', client=OpenAI(api_key='...'))
+    return LangchainLLMWrapper(
+
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_calls_ragas_with_default_metrics
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_threads_top_k_to_build_eval_dataset
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_accepts_custom_metrics
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_omits_run_config_when_max_workers_is_none
+tests/evaluation/test_run_eval.py::test_evaluate_pipeline_passes_max_workers_via_run_config
+  /workspace/code/starter/.venv/lib/python3.11/site-packages/ragas/utils.py:113: DeprecationWarning: LangchainLLMWrapper is deprecated and will be removed in a future version. Use llm_factory instead: from openai import OpenAI; from ragas.llms import llm_factory; client = OpenAI(api_key='...'); llm = llm_factory('gpt-4o-mini', client=client)
+    return self.new_target(*args, **kwargs)
+
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+  /workspace/code/starter/tests/evaluation/test_run_eval.py:185: DeprecationWarning: Importing answer_relevancy from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import answer_relevancy
+    from ragas.metrics import (
+
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+  /workspace/code/starter/tests/evaluation/test_run_eval.py:185: DeprecationWarning: Importing context_precision from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_precision
+    from ragas.metrics import (
+
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+  /workspace/code/starter/tests/evaluation/test_run_eval.py:185: DeprecationWarning: Importing context_recall from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_recall
+    from ragas.metrics import (
+
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+tests/evaluation/test_run_eval.py::test_default_metrics_are_the_four_stable_ones
+  /workspace/code/starter/tests/evaluation/test_run_eval.py:185: DeprecationWarning: Importing faithfulness from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import faithfulness
+    from ragas.metrics import (
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+231 passed, 26 warnings in 4.66s

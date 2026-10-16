@@ -1,0 +1,18 @@
+{
+  "product_id": "prod_031_gearbox_pro_power",
+  "name": "Gearbox Pro Power Elongated",
+  "category": "paddles",
+  "brand": "Gearbox",
+  "price": 219.99,
+  "description": "The Gearbox Pro Power Elongated is built for advanced and tournament players who want maximum reach and raw power off the paddle face. Its carbon fiber face is paired with Gearbox's proprietary Cam Lock edge system, which keeps the face perfectly flat under stress for a trampoline-like pop on drives and putaways.",
+  "specifications": {
+    "weight": "8.2 oz",
+    "grip_size": "4.5 in",
+    "face_material": "Raw carbon fiber",
+    "core": "Polypropylene honeycomb, Cam Lock edge",
+    "shape": "elongated",
+    "length": "16.5 in",
+    "width": "7.5 in"
+  },
+  "care_instructions": "Keep the paddle face dry and free of grit between points; a gritty face loses spin over time. Store the paddle at room temperature in its cover and avoid stacking heavy items on top of it."
+}

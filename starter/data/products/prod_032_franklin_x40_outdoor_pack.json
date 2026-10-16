@@ -1,0 +1,16 @@
+{
+  "product_id": "prod_032_franklin_x40_outdoor_pack",
+  "name": "Franklin X-40 Outdoor 12-Pack",
+  "category": "balls",
+  "brand": "Franklin",
+  "price": 44.99,
+  "description": "A bulk 12-pack of Franklin's official outdoor tournament ball, the X-40. Built with a durable one-piece polymer shell designed to hold up on asphalt and concrete courts without cracking, with a consistent bounce profile approved for USA Pickleball sanctioned play.",
+  "specifications": {
+    "hole_count": 40,
+    "weight": "0.9 oz",
+    "material": "Durable one-piece polymer",
+    "color": "Optic yellow",
+    "pack_size": 12
+  },
+  "care_instructions": "Rinse off dirt and debris with water after play on abrasive surfaces; let air dry before storing. Keep out of prolonged direct sunlight to prevent UV discoloration and brittleness."
+}

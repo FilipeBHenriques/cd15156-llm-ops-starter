@@ -1,0 +1,33 @@
+uv run python scripts/verify_capstone.py
+======================================================================
+Capstone verification — automated checks
+======================================================================
+[+] unit-tests-pass
+    Unit tests: 231 passed, 26 warnings in 2.57s
+[+] dependency-graph-forward-only
+    Forward-dependency graph: 4 passed in 0.06s
+[+] query-response-schema-complete
+    QueryResponse schema: 5 passed in 0.80s
+[+] end-to-end-wiring
+    Cross-package end-to-end: 6 passed in 0.70s
+
+======================================================================
+Manual verification (requires running services + credentials)
+======================================================================
+[ ] make load-data — data/chroma/ is populated; PersistentClient.get_or_create_collection('products').count() returns >0
+[ ] POST /query (simple) — returns response via gpt-4o-mini (check `model` field)
+[ ] POST /query (complex) — returns response via gpt-4o (check `model` field)
+[ ] data/cost_log.jsonl — appended after each query
+[ ] Phoenix tracing dashboard at http://localhost:6006 — trace appears for the request (check trace_id in response). If port 6006 isn't reachable, run `make show-traces` for a markdown export of the same trace data.
+[ ] make eval — RAGAS prints faithfulness/answer_relevancy/context_recall/context_precision
+[ ] Drop a malformed JSON in data/inbox/ — quarantined to data/inbox/failed/ with .error.txt
+[ ] Drop a valid product JSON in data/inbox/ — appears in Chroma within seconds
+[ ] POST /query/stream — receives SSE token events then a 'done' event
+[ ] make install-guardrails-models — DeBERTa + Presidio + zero-shot + NLI models cached
+[ ] guarded_route_query (or _llmguard) — injection input returns blocked_by; clean input passes
+[ ] cached_route_query — repeat query within TTL returns cached=true (verify entries via `chromadb.PersistentClient(path='data/chroma').get_or_create_collection('cache').count()`)
+
+======================================================================
+Automated: 4 passed, 0 failed
+Manual: 12 items to verify in a real environment
+======================================================================

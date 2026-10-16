@@ -1,0 +1,45 @@
+=== data/inbox/failed/ contents ===
+(empty or not yet quarantined)
+
+=== quarantine .error.txt files ===
+=== confirming curl for an ingested good product ===
+{
+    "answer": "I don't have access to information about an inbox or any recent additions. However, if you have specific details or a product name, I can provide information based on the products in our catalog. Please let me know!",
+    "sources": [
+        {
+            "doc_id": "prod_026",
+            "chunk_text": "11SIX24 Monarch All Court 16mm\n\nThe 11SIX24 Monarch All Court is the brand's mid-mass widebody designed for players who want a forgiving, balanced feel without sacrificing pop. The 11SIX24 CFC Surface stacks three layers \u2014 two outer sheets of raw Toray T700 carbon fiber sandwiching a fiberglass middle \u2014 to combine the bite of a raw-carbon face with the energy return of a fiberglass underlayer. A 16 mm polypropylene polymer core widens the sweet spot relative to thinner 14 mm builds and softens the feel on resets and dinks.\n\nPrice: $99.99 USD\n\nSpecifications:\n  weight: 8.0-8.3 oz\n  grip_size: 4.125 in\n  face_material: 11SIX24 CFC Surface (raw Toray T700 carbon fiber + fiberglass + raw Toray T700 carbon fiber)\n  core: 16 mm polypropylene polymer honeycomb\n  shape: widebody\n  length: 16.0 in\n  width: 8.0 in\n  handle_length: 5.75 in\n\nCare instructions: Wipe the raw carbon face with a damp microfiber after each session \u2014 abrasive cleaners sand down the surface texture that gives the paddle its spin character. Avoid leaving the paddle in direct sunlight or hot vehicles, which can soften the polymer core. Store in a paddle cover when not in use.",
+            "similarity_score": 0.21253947504547177
+        },
+        {
+            "doc_id": "prod_028",
+            "chunk_text": "Bread & Butter The Filth 16mm Elongated\n\nThe Bread & Butter Filth 16mm Elongated is a thermoformed unibody paddle from the brand's signature high-spin line. The T700 raw carbon fiber face holds aggressive peel-ply texture for tournament-grade topspin, and the 16 mm high-density polypropylene core provides plush dwell time on resets without losing the trademark Filth pop on drives. The elongated 16.5 in profile extends reach for two-handed backhands and overheads, and the octagon handle with vibration-dampening wrap reduces transfer to the wrist on off-center hits. USAP approved.\n\nPrice: $159.99 USD\n\nSpecifications:\n  weight: 7.6-8.0 oz\n  grip_size: 4.25 in\n  face_material: T700 raw carbon fiber, thermoformed unibody\n  core: 16 mm high-density polypropylene honeycomb\n  shape: elongated\n  length: 16.5 in\n  width: 7.375 in\n  handle_length: 5.5 in\n  swing_weight: 121\n  twist_weight: 6.20\n\nCare instructions: Wipe the raw carbon face with a microfiber after each session to preserve the peel-ply texture that drives spin. Skip abrasive cleaners and solvent-based wipes \u2014 they polish away the surface tooth. The thermoformed edge wall is impact-tolerant but not impact-proof; do not drop the paddle on hard courts. Store flat in a paddle cover; avoid hot vehicles.",
+            "similarity_score": 0.20968614525110407
+        },
+        {
+            "doc_id": "prod_018",
+            "chunk_text": "Engage Court Shorts\n\nThe Engage Court Shorts are built for athletic movement with a 7-inch inseam and gusseted crotch for unrestricted lateral reach. Deep side pockets hold multiple balls, and the lightweight woven fabric dries quickly after sweaty sessions. Elastic waistband with internal drawcord.\n\nPrice: $44.99 USD\n\nSpecifications:\n  material: 100% recycled polyester, DWR finish\n  sizes_available: ['S', 'M', 'L', 'XL', 'XXL']\n  color_options: ['Graphite', 'Navy', 'Black']\n\nCare instructions: Machine wash cold. The DWR (durable water repellent) finish will diminish over time \u2014 tumble dry on low heat periodically to reactivate the treatment.",
+            "similarity_score": 0.2030912303868181
+        },
+        {
+            "doc_id": "prod_027",
+            "chunk_text": "JOOLA Ben Johns Perseus 3S 16mm\n\nThe JOOLA Ben Johns Perseus 3S 16mm is the 16 mm control variant of Ben Johns' signature paddle in JOOLA's third-generation 3S lineup. The Charged Carbon face uses an electrostatic treatment to lock in spin without sacrificing dwell, and the Propulsion Core extends ball contact time for plush resets at the kitchen line. The 16 mm build trades a hint of raw power for a wider sweet spot and softer feel compared to the 14 mm sibling, which is why most all-court players gravitate to this thickness. UPA-A certified.\n\nPrice: $199.95 USD\n\nSpecifications:\n  weight: 8.0 oz\n  grip_size: 4.125 in\n  face_material: Charged Carbon\n  core: 16 mm Propulsion Core (honeycomb polymer)\n  shape: elongated\n  length: 16.5 in\n  width: 7.5 in\n  handle_length: 5.5 in\n  grip: JOOLA Black Feel-Tec Pure Grip\n\nCare instructions: Clean the Charged Carbon face with a microfiber cloth and a small amount of mild soap \u2014 strong solvents strip the electrostatic surface treatment that drives the paddle's spin response. Inspect the edge guard periodically; the thermoformed wall is impact-resistant but can chip on hard floors. Store in the included sleeve.",
+            "similarity_score": 0.20070984595188868
+        },
+        {
+            "doc_id": "prod_033_jalbert_pro_backpack",
+            "chunk_text": "JA Jalbert Pro Backpack\n\nA tournament-day backpack built for players who carry more than one paddle. Dedicated padded paddle sleeves sit alongside a ventilated shoe compartment and an insulated side pocket for drinks, so gear, shoes, and hydration never mix in transit.\n\nPrice: $89.99 USD\n\nSpecifications:\n  type: backpack\n  paddle_capacity: 4\n  compartments: 6\n  material: 600D polyester\n  dimensions: 19 in x 12 in x 9 in\n\nCare instructions: Spot clean the exterior with a damp cloth and mild soap; do not machine wash. Air dry fully before storing paddles inside to avoid trapped moisture.",
+            "similarity_score": 0.19316138117926895
+        }
+    ],
+    "confidence": 0.2038376155629103,
+    "model": "gpt-4o-mini",
+    "tokens": {
+        "prompt_tokens": 1609,
+        "completion_tokens": 43
+    },
+    "cost_usd": 0.00026714999999999996,
+    "cached": true,
+    "trace_id": "9e912c854d17229fd6157e89e525484d",
+    "blocked_by": null
+}

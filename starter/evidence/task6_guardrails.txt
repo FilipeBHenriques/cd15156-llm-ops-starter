@@ -1,0 +1,57 @@
+=== should be BLOCKED (new 'from now on' pattern) ===
+{
+    "answer": "I can't help with that request. Please ask about ThirdShotHub products.",
+    "sources": [],
+    "confidence": 0.0,
+    "model": "",
+    "tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0
+    },
+    "cost_usd": 0.0,
+    "cached": false,
+    "trace_id": null,
+    "blocked_by": "prompt_injection: matched pattern '\\\\bfrom\\\\s+now\\\\s+on\\\\s*,?\\\\s*(you\\\\s+(will|must|should)|respond|reply|act)\\\\b'"
+}
+
+=== should PASS CLEAN (legitimate question) ===
+{
+    "answer": "The Paddletek Bantam TS-5 is an excellent choice for beginners and recreational players. It offers an affordable and high-quality entry point with features such as:\n\n- Lightweight design (7.3 oz) for easy maneuverability\n- Polymer core and fiberglass composite face for a forgiving sweet spot\n- Widebody shape for reduced arm fatigue during longer sessions\n\nThis paddle helps enhance ease of use for those new to the game. It is priced at $114.99 USD.",
+    "sources": [
+        {
+            "doc_id": "prod_006",
+            "chunk_text": "Paddletek Bantam TS-5\n\nThe Paddletek Bantam TS-5 is the go-to paddle for beginners and recreational players seeking an affordable yet high-quality entry point. Its lightweight polymer core and fiberglass composite face offer a forgiving sweet spot and easy maneuverability, reducing arm fatigue during longer sessions.\n\nPrice: $114.99 USD\n\nSpecifications:\n  weight: 7.3 oz\n  grip_size: 4.0 in\n  face_material: Fiberglass composite\n  core: Smart Response Technology polymer\n  shape: widebody\n  length: 15.5 in\n  width: 8.0 in\n\nCare instructions: Clean with a damp cloth. The fiberglass face is durable for recreational use. Store indoors to protect the edge guard from cracking in cold weather.",
+            "similarity_score": 0.6003024104634734
+        },
+        {
+            "doc_id": "prod_001",
+            "chunk_text": "Selkirk AMPED S2\n\nThe Selkirk AMPED S2 delivers a balanced blend of power and control, making it an excellent choice for intermediate players looking to elevate their game. Its FiberFlex fiberglass face provides a responsive feel with consistent ball placement, while the X5 polypropylene honeycomb core absorbs vibration for comfortable extended play.\n\nPrice: $129.99 USD\n\nSpecifications:\n  weight: 7.8 oz\n  grip_size: 4.25 in\n  face_material: FiberFlex fiberglass\n  core: X5 polypropylene honeycomb\n  shape: widebody\n  length: 15.75 in\n  width: 8.0 in\n\nCare instructions: Wipe the paddle face with a damp cloth after play to remove ball residue. Avoid leaving the paddle in direct sunlight or extreme heat, as this can warp the core. Store in a paddle cover when not in use.",
+            "similarity_score": 0.42096356794491796
+        },
+        {
+            "doc_id": "prod_030",
+            "chunk_text": "Enhance Gen 4.5 Elongated\n\nThe Enhance Gen 4.5 Elongated is the brand's flagship full-foam-core paddle, widely reviewed as one of the best foam-core options under $175. The T700 raw carbon fiber face delivers high spin and a stiff striking surface, while the EPP foam core replaces traditional polypropylene honeycomb to extend dwell time and produce a markedly softer, quieter feel on contact. The elongated profile, 5.7 in handle, and 16.5 in length combine for extra reach on backhand drives and overheads, and the foam construction widens the off-center sweet spot relative to honeycomb paddles in the same shape.\n\nPrice: $169.00 USD\n\nSpecifications:\n  weight: 8.1-8.3 oz\n  grip_size: 4.1 in\n  face_material: T700 raw carbon fiber\n  core: EPP foam (full foam core, no honeycomb)\n  shape: elongated\n  length: 16.4 in\n  width: 7.5 in\n  handle_length: 5.7 in\n  swing_weight: 118-120\n  twist_weight: 6.25\n\nCare instructions: Wipe the raw T700 carbon face with a damp microfiber after each session \u2014 solvents and abrasive cleaners erode the surface texture that drives spin. EPP foam cores are more sensitive to heat than polypropylene; never leave the paddle in a hot vehicle or in direct sunlight for extended periods, as heat can deform the foam and change the paddle's response. Store flat in a paddle cover.",
+            "similarity_score": 0.41703903834671663
+        },
+        {
+            "doc_id": "prod_002",
+            "chunk_text": "JOOLA Hyperion CFS 16\n\nThe JOOLA Hyperion CFS 16 is a premium carbon fiber paddle designed for competitive players who demand maximum spin and power. Its Carbon Friction Surface technology creates exceptional ball grip for aggressive topspin shots, while the reactive honeycomb polymer core ensures a solid, responsive feel at the net.\n\nPrice: $199.99 USD\n\nSpecifications:\n  weight: 8.2 oz\n  grip_size: 4.0 in\n  face_material: Carbon Friction Surface (CFS)\n  core: Reactive honeycomb polymer\n  shape: elongated\n  length: 16.5 in\n  width: 7.5 in\n\nCare instructions: Clean the carbon fiber face with a microfiber cloth and mild soap solution. Do not use abrasive cleaners. Store in the included neoprene cover to protect the face texture.",
+            "similarity_score": 0.4119937777404383
+        },
+        {
+            "doc_id": "prod_005",
+            "chunk_text": "HEAD Radical Tour\n\nThe HEAD Radical Tour brings tennis engineering expertise to the court. Featuring an Extreme Spin Texture (EST) face and an Optimized Tubular Construction (OTC) frame, this paddle delivers consistent power from edge to edge with a generous sweet spot suited to all-court players.\n\nPrice: $149.99 USD\n\nSpecifications:\n  weight: 8.1 oz\n  grip_size: 4.25 in\n  face_material: Extreme Spin Texture (EST) composite\n  core: Polypropylene honeycomb\n  shape: standard\n  length: 15.875 in\n  width: 7.875 in\n\nCare instructions: Wipe with a clean damp cloth. Inspect the edge guard periodically for cracks and replace if damaged to protect the core. Store away from moisture.",
+            "similarity_score": 0.4032642711334209
+        }
+    ],
+    "confidence": 0.45071261312579336,
+    "model": "gpt-4o",
+    "tokens": {
+        "prompt_tokens": 1433,
+        "completion_tokens": 97
+    },
+    "cost_usd": 0.0045525,
+    "cached": true,
+    "trace_id": "d385139909b4cab4942dd1b4eaa393fa",
+    "blocked_by": null
+}

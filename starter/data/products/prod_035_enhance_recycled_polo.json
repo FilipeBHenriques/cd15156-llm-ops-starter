@@ -1,0 +1,17 @@
+{
+  "product_id": "prod_035_enhance_recycled_polo",
+  "name": "Enhance Recycled Court Polo",
+  "category": "apparel",
+  "brand": "Enhance",
+  "price": 54.99,
+  "description": "An athletic-fit performance polo made from 100% recycled polyester with a moisture-wicking finish built for long matches in the heat. A mesh underarm panel adds extra airflow during aggressive point play, and the fabric resists wrinkling in a gear bag between games.",
+  "specifications": {
+    "garment_type": "polo",
+    "material": "100% recycled polyester",
+    "fit": "athletic",
+    "size_range": "XS-XXL",
+    "color_options": ["Navy", "Heather Grey", "Coral"],
+    "moisture_wicking": true
+  },
+  "care_instructions": "Machine wash cold with like colors and tumble dry low. Avoid fabric softener, which can reduce the moisture-wicking finish over repeated washes."
+}

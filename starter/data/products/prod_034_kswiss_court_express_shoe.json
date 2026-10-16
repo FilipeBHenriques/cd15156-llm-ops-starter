@@ -1,0 +1,16 @@
+{
+  "product_id": "prod_034_kswiss_court_express_shoe",
+  "name": "K-Swiss Court Express Pickleball Shoe",
+  "category": "accessories",
+  "brand": "K-Swiss",
+  "price": 109.99,
+  "description": "A lightweight court shoe tuned for the fast lateral cuts pickleball demands at the kitchen line. A wide, low-to-the-ground platform improves stability on quick direction changes, while a breathable mesh upper keeps the foot cool through long tournament days.",
+  "specifications": {
+    "upper_material": "Breathable mesh with synthetic overlays",
+    "midsole": "Dual-density EVA",
+    "outsole": "Non-marking rubber herringbone tread",
+    "size_range": "6-13 US M",
+    "weight_per_shoe": "10.5 oz"
+  },
+  "care_instructions": "Wipe the upper with a damp cloth after outdoor play and let shoes air dry away from direct heat. Do not machine wash or dry; this can delaminate the midsole."
+}
