@@ -51,7 +51,14 @@ def summarize_traces(df: Any, last_n: int) -> list[dict]:
             continue
         root_row = root.iloc[0]
 
-        children = group[group["name"] != "rag_query"]
+        # Exclude the root span by its own row, not by a hardcoded name.
+        # The old `group["name"] != "rag_query"` check assumed a root span
+        # name that this project no longer uses (the router.py fix wraps
+        # the request in a span named "request"), so nothing matched it,
+        # the root span was counted as its own "child", and its duration
+        # (the whole trace) always "won" the slowest-child comparison —
+        # producing nonsense like "slowest child 153% of total latency".
+        children = group.drop(index=root_row.name)
         if len(children) > 0:
             children = children.copy()
             children["_dur_ms"] = (

@@ -5,11 +5,15 @@ pipeline → log per-request cost. Deliverable #3 of the project proposal
 (measurable savings from tiered routing) is realised here.
 """
 
+from opentelemetry import trace
+
 from src.config import settings
 from src.cost.tracker import log_request
 from src.gateway.classifier import QueryType, classify
 from src.models import QueryResponse
 from src.tracing import traced_pipeline
+
+tracer = trace.get_tracer(__name__)
 
 
 def select_model(query_type: QueryType) -> str:
@@ -18,9 +22,16 @@ def select_model(query_type: QueryType) -> str:
 
 
 def route_query(question: str, top_k: int = 5) -> QueryResponse:
-    """Full request flow: classify, dispatch, trace, log."""
-    query_type = classify(question)
-    model = select_model(query_type)
-    response = traced_pipeline(question, model=model, top_k=top_k)
+    """Full request flow: classify, dispatch, trace, log.
+
+    Wrapped in a parent "request" span so classification (which runs
+    before `traced_pipeline` opens its own retrieval/generation spans)
+    lands inside the same trace instead of being invisible to it.
+    """
+    with tracer.start_as_current_span("request"):
+        with tracer.start_as_current_span("classification"):
+            query_type = classify(question)
+        model = select_model(query_type)
+        response = traced_pipeline(question, model=model, top_k=top_k)
     log_request(model, response.tokens, response.cost_usd, query_type)
     return response

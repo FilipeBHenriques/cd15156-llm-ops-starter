@@ -1,4 +1,4 @@
-.PHONY: help setup serve serve-proxy watch eval load-data install-guardrails-models verify test show-traces tune-factuality eval-llm-judge seed-cost-log seed-traces eval-topk-sweep harvest-evidence cost-report
+.PHONY: help setup serve serve-proxy watch eval load-data install-guardrails-models verify test show-traces tune-factuality eval-llm-judge seed-cost-log seed-traces eval-topk-sweep harvest-evidence cost-report eval-stats
 
 # Make `src` importable for scripts run via `uv run python scripts/...`.
 # (Pytest gets this from `pythonpath = ["."]` in pyproject.toml; scripts don't.)
@@ -102,6 +102,10 @@ eval-topk-sweep: ## Run RAGAS at top_k=3,5,10 and print a §2 comparison table (
 
 cost-report: ## Run the cost savings analysis report (rubric §9 — tiered vs. baseline)
 	uv run python scripts/cost_report.py
+
+eval-stats: ## Compute per-question median/percentile/min-max from a `make eval --output` run (rubric §5)
+	uv run python scripts/run_eval.py --max-workers=$(EVAL_MAX_WORKERS) --output data/eval_results.json
+	uv run python scripts/eval_stats.py data/eval_results.json
 
 harvest-evidence: ## Cross-cutting WRITEUP harness — runs every §1–§11 evidence step, writes WRITEUP-draft.md
 	uv run python scripts/harvest_evidence.py

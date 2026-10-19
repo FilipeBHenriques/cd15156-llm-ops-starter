@@ -11,6 +11,10 @@ __pycache__/
 # Local on-disk data stores written by the starter at runtime
 data/chroma/
 data/phoenix/
+
+# cost_log.jsonl is ignored by default (regenerated every run), but the
+# capstone rubric requires it committed as evidence for submission — see
+# the explicit `!` exception at the bottom of this file.
 data/cost_log.jsonl
 
 # Runtime inbox — file-watcher input + quarantine. Keep the directory
@@ -21,6 +25,11 @@ data/inbox/failed/
 # Operator runtime artifacts from `make harvest-evidence`
 WRITEUP-draft.md
 WRITEUP-evidence/
+
+# --- Rubric evidence exceptions: these MUST reach the reviewer ---
+!data/cost_log.jsonl
+!WRITEUP-evidence/
+!WRITEUP-evidence/cost-dashboard.png
 
 # OS-level
 .DS_Store

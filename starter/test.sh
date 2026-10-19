@@ -1,5 +1,13 @@
-ls -la data/inbox/failed/
-cat data/inbox/failed/*.error.txt 2>/dev/null
+uv run python -c "
+import chromadb
+client = chromadb.PersistentClient(path='data/chroma')
+try:
+    client.delete_collection('cache')
+    print('cache collection cleared')
+except Exception as e:
+    print(f'no cache collection to clear ({e})')
+"
+make seed-traces
+make show-traces
 
-curl -s -X POST http://localhost:8080/query -H 'Content-Type: application/json' \
-  -d '{"question": "Tell me about the Engage Pursuit MX Lite paddle with the ControlPro polymer core"}' | uv run python -m json.tool
+curl -s http://localhost:8080/cost-dashboard | w3m -dump -T text/html
