@@ -44,9 +44,15 @@ def summarize_traces(df: Any, last_n: int) -> list[dict]:
 
     summaries: list[dict] = []
     for trace_id, group in df.groupby("context.trace_id"):
-        root = group[group["name"] == "rag_query"]
-        if len(root) == 0:
-            root = group[group["parent_id"].isna()]
+        # Always take the actual parentless span as root — never match by
+        # name. `rag_query` used to BE the root, so matching it by name
+        # worked; now that router.py wraps everything in a "request" span,
+        # `rag_query` is a CHILD. Matching it by name here would treat a
+        # child as "root", excluding it from the children set while
+        # leaving the *real* root ("request", which spans the whole
+        # trace) sitting in that set — reintroducing the exact
+        # >100%-of-total-latency bug this file was already fixed for once.
+        root = group[group["parent_id"].isna()]
         if len(root) == 0:
             continue
         root_row = root.iloc[0]
@@ -78,9 +84,28 @@ def summarize_traces(df: Any, last_n: int) -> list[dict]:
         # `row["attributes.rag.latency_ms"]` is a missing-column read
         # that silently returns the fallback. The values live inside the
         # dict at `row["attributes.rag"]`.
-        rag_attrs = root_row.get("attributes.rag") or {}
+        #
+        # These attributes (and `input.value`) are set on the `rag_query`
+        # span (see phoenix_backend.py's `trace_rag_query` decorator), not
+        # on the true root. Since router.py's fix made `request` the real
+        # root and `rag_query` a child, we have to look them up from the
+        # `rag_query` child specifically — reading them off `root_row` (as
+        # before) would silently return "—"/0 for every trace now that
+        # `request` carries no RAG attributes of its own.
+        rag_query_rows = group[group["name"] == "rag_query"]
+        rag_row = rag_query_rows.iloc[0] if len(rag_query_rows) > 0 else root_row
+
+        rag_attrs = rag_row.get("attributes.rag") or {}
         if not isinstance(rag_attrs, dict):  # NaN-as-float guard
             rag_attrs = {}
+
+        # Total request latency now has to come from the root span's own
+        # start/end timestamps (it spans classification + rag_query, so
+        # it's strictly >= the old rag.latency_ms, which only covered the
+        # inner pipeline) rather than from the rag attribute dict.
+        root_latency_ms = round(
+            (root_row["end_time"] - root_row["start_time"]).total_seconds() * 1000, 1
+        )
 
         # Token counts are set on the `rag_generation` child span (see
         # src/tracing/phoenix_backend.py), not on the rag_query root.
@@ -98,12 +123,10 @@ def summarize_traces(df: Any, last_n: int) -> list[dict]:
             {
                 "trace_id": str(trace_id)[:8],
                 "question": str(
-                    root_row.get("attributes.input.value", "—")
+                    rag_row.get("attributes.input.value", "—")
                 )[:80],
                 "model": str(rag_attrs.get("model", "—")),
-                "latency_ms": round(
-                    float(rag_attrs.get("latency_ms", 0) or 0), 1
-                ),
+                "latency_ms": root_latency_ms,
                 "prompt_tokens": prompt_tok,
                 "completion_tokens": completion_tok,
                 "slowest_span": slowest_name,

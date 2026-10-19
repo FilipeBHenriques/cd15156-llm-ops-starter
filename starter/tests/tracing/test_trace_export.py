@@ -12,21 +12,36 @@ from src.tracing.trace_export import (
 
 
 def _two_span_trace(trace_id: str = "trace_a") -> pd.DataFrame:
-    """Build a synthetic Phoenix span DataFrame: one root + one child.
+    """Build a synthetic Phoenix span DataFrame: request root + 2 children.
 
-    Mirrors the column shape Phoenix actually emits — nested span
-    attributes under ``rag.*`` flatten into a single dict-valued
-    column ``attributes.rag``, not into per-key flat columns. Token
-    counts live on the ``rag_generation`` child span, not the root.
+    Mirrors the real shape produced by router.py + phoenix_backend.py:
+    an outer "request" span (opened by route_query, wraps classification
+    + the whole pipeline) is the true root; "rag_query" is a CHILD of
+    it (opened by traced_pipeline); "rag_generation" is a grandchild.
+    Nested span attributes under ``rag.*`` flatten into a single
+    dict-valued column ``attributes.rag``, not into per-key flat
+    columns, and live on the ``rag_query`` span specifically. Token
+    counts live on the ``rag_generation`` child span.
     """
     return pd.DataFrame(
         [
             {
                 "context.trace_id": trace_id,
-                "name": "rag_query",
+                "name": "request",
                 "parent_id": None,
-                "start_time": pd.Timestamp("2026-04-29 12:00:00"),
-                "end_time": pd.Timestamp("2026-04-29 12:00:01"),
+                "start_time": pd.Timestamp("2026-04-29 12:00:00.000"),
+                "end_time": pd.Timestamp("2026-04-29 12:00:01.000"),
+                "attributes.input.value": None,
+                "attributes.rag": None,
+                "attributes.llm.token_count.prompt": None,
+                "attributes.llm.token_count.completion": None,
+            },
+            {
+                "context.trace_id": trace_id,
+                "name": "rag_query",
+                "parent_id": "request_span",
+                "start_time": pd.Timestamp("2026-04-29 12:00:00.050"),
+                "end_time": pd.Timestamp("2026-04-29 12:00:00.950"),
                 "attributes.input.value": "How heavy is the Selkirk?",
                 "attributes.rag": {
                     "model": "gpt-4o-mini",
@@ -38,7 +53,7 @@ def _two_span_trace(trace_id: str = "trace_a") -> pd.DataFrame:
             {
                 "context.trace_id": trace_id,
                 "name": "rag_generation",
-                "parent_id": "root",
+                "parent_id": "rag_query_span",
                 "start_time": pd.Timestamp("2026-04-29 12:00:00.100"),
                 "end_time": pd.Timestamp("2026-04-29 12:00:00.900"),
                 "attributes.input.value": None,
@@ -62,7 +77,11 @@ def test_summarize_traces_groups_by_trace_id():
     assert s["trace_id"] == "trace_a"[:8]
     assert "How heavy" in s["question"]
     assert s["model"] == "gpt-4o-mini"
-    assert s["latency_ms"] == 850.0
+    # Root ("request") spans 12:00:00.000 -> 12:00:01.000 = 1000ms total,
+    # which now covers classification + the whole pipeline — not just
+    # the old rag.latency_ms attribute (850ms), which only measured the
+    # inner rag_query span.
+    assert s["latency_ms"] == 1000.0
     assert s["prompt_tokens"] == 120
     assert s["completion_tokens"] == 30
 
@@ -72,9 +91,12 @@ def test_summarize_traces_identifies_slowest_child():
     summaries = summarize_traces(df, last_n=10)
 
     s = summaries[0]
-    assert s["slowest_span"] == "rag_generation"
-    # 0.1s start, 0.9s end → 800ms
-    assert s["slowest_ms"] == 800.0
+    # rag_query (900ms: .050 -> .950) wraps rag_generation (800ms) plus
+    # retrieval, so it's the slowest *child* of the request root — this
+    # matches the real seed-trace evidence where rag_query is reported
+    # as the slowest step.
+    assert s["slowest_span"] == "rag_query"
+    assert s["slowest_ms"] == 900.0
 
 
 def test_summarize_traces_handles_empty_df():

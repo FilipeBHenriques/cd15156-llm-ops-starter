@@ -20,6 +20,7 @@ import sys
 import time
 
 import httpx
+import pandas as pd
 
 from src.config import settings
 from src.tracing.trace_export import render_markdown, summarize_traces
@@ -123,27 +124,51 @@ def _slowest_step_across_traces(df) -> str:
     trace, picks the highest, and reports the share of total root
     latency it explains. Falls back to a polite stub when traces
     haven't landed yet.
+
+    Root detection must use the actual parentless span (``parent_id``
+    is null), never a hardcoded name. This used to match root by
+    ``name == "rag_query"``, which was correct back when `rag_query`
+    *was* the root span. Now that `router.py` wraps classification +
+    pipeline in an outer "request" span, `rag_query` is a CHILD —
+    matching it by name here left "request" (which spans the whole
+    trace) sitting in the "children" set, where its own full-trace
+    duration always "won" as the slowest step, producing nonsense
+    like "148% of total request latency".
     """
     if df is None or len(df) == 0:
         return "Slowest step across 0 traces: (no spans captured — check Phoenix tracer)"
 
-    children = df[df["name"] != "rag_query"].copy()
-    roots = df[df["name"] == "rag_query"]
-    if len(children) == 0 or len(roots) == 0:
-        return "Slowest step across 0 traces: (no rag_query spans found)"
+    root_durations_ms: list[float] = []
+    child_frames = []
+    for _trace_id, group in df.groupby("context.trace_id"):
+        root = group[group["parent_id"].isna()]
+        if len(root) == 0:
+            continue
+        root_row = root.iloc[0]
+        root_durations_ms.append(
+            (root_row["end_time"] - root_row["start_time"]).total_seconds() * 1000
+        )
+        children = group.drop(index=root_row.name)
+        if len(children) > 0:
+            child_frames.append(children)
 
-    children["_dur_ms"] = (
-        (children["end_time"] - children["start_time"]).dt.total_seconds() * 1000
+    if not root_durations_ms:
+        return "Slowest step across 0 traces: (no rooted traces found)"
+
+    if not child_frames:
+        return f"Slowest step across {len(root_durations_ms)} traces: (no child spans found)"
+
+    children_df = pd.concat(child_frames, ignore_index=True)
+    children_df["_dur_ms"] = (
+        (children_df["end_time"] - children_df["start_time"]).dt.total_seconds() * 1000
     )
-    avg_by_name = children.groupby("name")["_dur_ms"].mean().sort_values(ascending=False)
+    avg_by_name = children_df.groupby("name")["_dur_ms"].mean().sort_values(ascending=False)
     slowest_name = avg_by_name.index[0]
     slowest_avg_ms = float(avg_by_name.iloc[0])
 
-    avg_root_ms = (
-        ((roots["end_time"] - roots["start_time"]).dt.total_seconds() * 1000).mean()
-    )
+    avg_root_ms = sum(root_durations_ms) / len(root_durations_ms)
     pct = (slowest_avg_ms / avg_root_ms * 100) if avg_root_ms else 0.0
-    n_traces = roots["context.trace_id"].nunique()
+    n_traces = len(root_durations_ms)
 
     return (
         f"Slowest step across {n_traces} traces: {slowest_name} "
